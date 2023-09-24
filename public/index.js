@@ -1,24 +1,24 @@
 function getColor(stock){
     if(stock === "GME"){
-        return "rgba(61, 161, 61, 0.7)"
+        return 'rgba(61, 161, 61, 0.7)'
     }
     if(stock === "MSFT"){
-        return "rgba(209, 4, 25, 0.7)"
+        return 'rgba(209, 4, 25, 0.7)'
     }
     if(stock === "DIS"){
-        return "rgba(18, 4, 209, 0.7)"
+        return 'rgba(18, 4, 209, 0.7)'
     }
     if(stock === "BNTX"){
-        return "rgba(166, 43, 158, 0.7)"
+        return 'rgba(166, 43, 158, 0.7)'
     }
 }
 
 async function main() {
-    const timeChartCanvas = document.querySelector("#time-chart");
-    const highestPriceChartCanvas = document.querySelector("#highest-price-chart");
-    const averagePriceChartCanvas = document.querySelector("#average-price-chart");
+    const timeChartCanvas = document.querySelector('#time-chart');
+    const highestPriceChartCanvas = document.querySelector('#highest-price-chart');
+    const averagePriceChartCanvas = document.querySelector('#average-price-chart');
 
-    const response = await fetch("https://api.twelvedata.com/time_series?symbol=GME,MSFT,DIS,BNTX&interval=1day&apikey=b2b0e11651294ee9a789558a1625b754")
+    const response = await fetch(`https://api.twelvedata.com/time_series?symbol=GME,MSFT,DIS,BNTX&interval=1day&apikey=ee317242dc13449089af39c9516c1077`)
 
     const result = await response.json()
 
@@ -29,8 +29,8 @@ async function main() {
     stocks.forEach( stock => stock.values.reverse())
 
     // Time Chart
-    new Chart(timeChartCanvas.getContext("2d"), {
-        type: "line",
+    new Chart(timeChartCanvas.getContext('2d'), {
+        type: 'line',
         data: {
             labels: stocks[0].values.map(value => value.datetime),
             datasets: stocks.map(stock => ({
@@ -43,12 +43,12 @@ async function main() {
     });
 
     // High Chart
-    new Chart(highestPriceChartCanvas.getContext("2d"), {
-        type: "bar",
+    new Chart(highestPriceChartCanvas.getContext('2d'), {
+        type: 'bar',
         data: {
             labels: stocks.map(stock => stock.meta.symbol),
             datasets: [{
-                label: "Highest",
+                label: 'Highest',
                 backgroundColor: stocks.map(stock => (
                     getColor(stock.meta.symbol)
                 )),
@@ -63,12 +63,12 @@ async function main() {
     });
 
     // Average Chart
-    new Chart(averagePriceChartCanvas.getContext("2d"), {
-        type: "pie",
+    new Chart(averagePriceChartCanvas.getContext('2d'), {
+        type: 'pie',
         data: {
             labels: stocks.map(stock => stock.meta.symbol),
             datasets: [{
-                label: "Average",
+                label: 'Average',
                 backgroundColor: stocks.map(stock => (
                     getColor(stock.meta.symbol)
                 )),
