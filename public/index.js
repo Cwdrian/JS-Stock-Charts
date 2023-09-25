@@ -1,3 +1,31 @@
+async function getStockFromApi(){
+    try{
+        let response = null
+
+        let data = null
+        return [data.GME, data.MSFT, data.DIS, data.BTNX]
+
+    } catch (error) {
+        console.log("error getting stocks from api", error)
+    }
+}
+const api_base_url = "https://api.twelvedata.com/";
+const apiKey = "ee317242dc13449089af39c9516c1077";
+const symbols = ["GME", "MSFT", "DIS", "BNTX"];
+
+async function getStocksFromApi() {
+    try {
+        const response = await fetch(
+            ${api_base_url}/time_series?symbol=${symbols.join(
+                ","
+            )}&interval=1day&apikey=${apiKey}
+        );
+        const data = await response.json();
+        return symbols.map((symbol) => data[symbol]);
+    } catch (error) {
+        console.error("Error getting stocks from API", error);
+    }
+}
 function getColor(stock){
     if(stock === "GME"){
         return 'rgba(61, 161, 61, 0.7)'
